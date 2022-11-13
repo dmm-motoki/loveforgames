@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LoveForGames</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid mx-0">
+          <%= link_to "LoveForGames", root_path, class: "navbar-brand font-weight-bold border border-secondary rounded-lg px-5" %>
+          <ul class="navbar-nav">
+            <% if admin_signed_in? %>
+
+              <li class="nav-item"><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-outline-secondary mx-3" %></li>
+            <% elsif user_signed_in? %>
+
+              <li class="nav-item"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary mx-3" %></li>
+            <% else %>
+
+              <li class="nav-item"><%= link_to 'ログイン', new_user_session_path, class: "btn btn-outline-secondary mx-3" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <%= yield %>
+  </body>
+</html>
