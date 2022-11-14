@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <% @games.each do |games| %>
+      <ul>
+        <li class="list-unstyled">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h4 class="card-title"><%= link_to games.title, public_game_path(games.id) %></h4>
+              <p class="card-text"><%= games.content %></p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    <% end %>
+  </div>
+  <div class="row">
+    <h4>ご希望のゲームが無い？</h4>
+    <%= form_with model: @request, url: public_requests_path do |f| %>
+      <div class="field">
+        <%= f.text_field :title %>
+      </div>
+      <div class="actions">
+        <%= f.submit "送信" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <h1>ゲーム追加</h1>
+  </div>
+  <div class="row">
+    <%= form_with model: @game, url: admin_games_path do |f| %>
+      <div class="field">
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+      </div>
+      <div class="field">
+        <%= f.label :content %>
+        <%= f.text_area :content %>
+      </div>
+      <div class="actions">
+        <%= f.submit "追加" %>
+      </div>
+    <% end %>
+  </div>
+  <div>
+    <%= link_to "exit", admin_games_path %>
+  </div>
+</div>

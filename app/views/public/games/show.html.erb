@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <h1><%= @game.title %></h1>
+  </div>
+  <div class="row">
+    <%= form_with model: @post, url: public_posts_path do |f| %>
+      <div class="field">
+        <%= f.label :message %>
+        <%= f.text_area :message %>
+        <%= f.hidden_field :game_id, :value => @game.id %>
+      </div>
+      <div class="actions">
+        <%= f.submit "投稿する" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <table class="table table-borderless">
+      <% @posts.reverse_each do |posts| %>
+        <tr>
+          <td><%= link_to posts.user.name, public_user_path %></td>
+          <td><%= posts.message %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
