@@ -1,0 +1,20 @@
+<div>
+  <div>
+    <h1>ゲーム情報編集</h1>
+  </div>
+  <div>
+    <%= form_with model: @game, url: admin_game_path do |f| %>
+      <div class="field">
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+      </div>
+      <div class="field">
+        <%= f.label :content %>
+        <%= f.text_area :content %>
+      </div>
+      <div class="actions">
+        <%= f.submit "変更する" %>
+      </div>
+    <% end %>
+  </div>
+</div>

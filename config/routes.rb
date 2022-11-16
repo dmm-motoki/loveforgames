@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
 
   namespace :admin do
-    resources :games, only: [:index, :new, :create, :show]
+    resources :games, only: [:index, :new, :create, :show, :edit, :update, :destroy ]
+    resources :users, only: [:index, :show]
+    resources :requests, only: [:index]
   end
   namespace :public do
     resources :games, only: [:index, :show]
     resources :requests, only: [:create]
+    resources :posts, only: [:show, :create]
+    resources :users, only: [:show]
     get 'homes/top'
   end
 

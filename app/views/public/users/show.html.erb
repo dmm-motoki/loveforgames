@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="row">
+    <% if @user.id == current_user.id %>
+      <h1>マイページ</h1>
+    <% else %>
+      <h1><%= @user.name %>のページ</h1>
+    <% end %>
+  </div>
+</div>

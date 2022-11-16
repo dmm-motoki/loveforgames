@@ -1,0 +1,12 @@
+<div>
+  <div>
+    <h1>ユーザー一覧</h1>
+  </div>
+  <div>
+    <% @users.each do |users| %>
+      <ul>
+        <li><%= link_to users.name, admin_user_path(users.id) %></li>
+      </ul>
+    <% end %>
+  </div>
+</div>

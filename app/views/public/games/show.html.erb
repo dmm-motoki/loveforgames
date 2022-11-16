@@ -18,8 +18,8 @@
     <table class="table table-borderless">
       <% @posts.reverse_each do |posts| %>
         <tr>
-          <td><%= link_to posts.user.name, public_user_path %></td>
-          <td><%= posts.message %></td>
+          <td><%= link_to posts.user.name, public_user_path(posts.user.id) %></td>
+          <td><%= link_to posts.message, public_post_path(posts.id), class: "text-dark" %></td>
         </tr>
       <% end %>
     </table>
