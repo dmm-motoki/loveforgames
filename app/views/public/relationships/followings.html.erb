@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <h1>フォロー</h1>
+  </div>
+  <div class="row">
+    <% if @user.followings.count == 0 %>
+      <h5>誰もフォローしていません</h5>
+    <% end %>
+    <table>
+      <% @users.each do |followings| %>
+      <tr>
+        <td><%= link_to followings.name, public_user_path(@users.ids) %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

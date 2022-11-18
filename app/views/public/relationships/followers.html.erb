@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <h1>フォロワー</h1>
+  </div>
+  <div class="row">
+    <% if @user.followers.count == 0 %>
+      <h5>フォロワーはいません</h5>
+    <% end %>
+    <table>
+      <% @users.each do |followers| %>
+      <tr>
+        <td><%= link_to followers.name, public_user_path(@users.ids) %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
