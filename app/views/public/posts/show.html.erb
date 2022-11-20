@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <h1><%= @post.user.name %>さんの投稿</h1>
+  </div>
+  <div class="row">
+    <p><%= @post.message %></p>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <%= form_with model: @comment, url: public_comments_path do |f| %>
+        <div class="form">
+          <h4>コメントを送ろう</h4>
+          <%= f.text_area :comments_content %>
+          <%= f.hidden_field :post_id, value: @post.id %>
+        </div>
+        <div class="action">
+          <%= f.submit "送信" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-9">
+      <table class="table">
+        <% @comments.each do |comments| %>
+        <tr>
+          <td><%= link_to comments.user.name, public_user_path(comments.user.id) %></td>
+          <td><%= comments.comments_content %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

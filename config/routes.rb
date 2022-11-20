@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :games, only: [:index, :show]
     resources :requests, only: [:create]
     resources :posts, only: [:show, :create]
+    resources :comments, only: [:create]
     resources :users, only: [:show]
     resources :users do
       resource :relationships, only: [:create, :destroy]
