@@ -4,11 +4,18 @@ class Public::PostsController < ApplicationController
     @comments = @post.comments
     @comment = current_user.comments.new
   end
+
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     @post.save
     redirect_to public_game_path(@post.game_id)
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+    redirect_to public_game_path(@post.game.id)
   end
 
   private

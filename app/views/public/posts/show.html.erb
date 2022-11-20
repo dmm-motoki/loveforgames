@@ -1,6 +1,11 @@
 <div class="container">
   <div class="row">
-    <h1><%= @post.user.name %>さんの投稿</h1>
+    <% if @post.user.id == current_user.id %>
+      <h1>あなたの投稿</h1>
+      <%= link_to "投稿を取り消す", public_post_path, method: :delete %>
+    <% else %>
+      <h1><%= @post.user.name %>さんの投稿</h1>
+    <% end %>
   </div>
   <div class="row">
     <p><%= @post.message %></p>

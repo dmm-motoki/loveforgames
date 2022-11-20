@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   namespace :public do
     resources :games, only: [:index, :show]
     resources :requests, only: [:create]
-    resources :posts, only: [:show, :create]
+    resources :posts, only: [:show, :create, :destroy]
     resources :comments, only: [:create]
     resources :users, only: [:show]
     resources :users do
