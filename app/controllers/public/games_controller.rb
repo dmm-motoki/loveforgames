@@ -7,7 +7,11 @@ class Public::GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @post = Post.new
-    @posts = Post.where(game_id: @game.id)
+    if params[:search].present?
+      @posts = Post.where("message LIKE ?", '%' + params[:search] + '%')
+    else
+      @posts = Post.where(game_id: @game.id)
+    end
   end
 
   private

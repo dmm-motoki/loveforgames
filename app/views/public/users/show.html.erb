@@ -16,8 +16,26 @@
     <% end %>
   </div>
   <div class="row">
-    <h5>フォロー <%= link_to @user.followings.count,  public_user_followings_path(@user.id) %></h5>
-    <h5>フォロワー <%= link_to @user.followers.count, public_user_followers_path(@user.id) %></h5>
+    <div>
+      <h5>フォロー <%= @user.followings.count %></h5>
+      <table>
+        <% @followings.each do |followings| %>
+        <tr>
+          <td><%= link_to followings.name, public_user_path(followings.id) %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+    <div>
+      <h5>フォロワー <%= @user.followers.count %></h5>
+      <table>
+        <% @followers.each do |followers| %>
+        <tr>
+          <td><%= link_to followers.name, public_user_path(followers.id) %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
 
   </div>

@@ -14,7 +14,16 @@
       </div>
     <% end %>
   </div>
+  <div>
+    <%= form_with url: public_game_path, method: :get do |f| %>
+      <%= f.text_field :search, class: 'form-control', placeholder: "キーワード検索" %>
+      <%= f.submit "検索" %>
+    <% end %>
+  </div>
   <div class="row">
+    <% if @posts.empty? %>
+      <p>該当する投稿がありません。</p>
+    <% end %>
     <table class="table table-borderless">
       <% @posts.reverse_each do |posts| %>
         <tr>

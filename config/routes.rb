@@ -13,10 +13,12 @@ Rails.application.routes.draw do
     resources :users, only: [:show]
     resources :users do
       resource :relationships, only: [:create, :destroy]
-      get 'followings' => 'relationships#followings', as: 'followings'
-      get 'followers' => 'relationships#followers', as: 'followers'
     end
     get 'homes/top'
+  end
+
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
 
   root "public/homes#top"

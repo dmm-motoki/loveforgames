@@ -10,6 +10,13 @@ class User < ApplicationRecord
   has_many :followers, through: :reverse_of_relationships, source: :follower
 
   has_many :comments, dependent: :destroy
+  
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = "ゲスト"
+    end
+  end
 
   def follow(user_id)
     relationships.create(followed_id: user_id)
