@@ -3,11 +3,15 @@
     <h1><%= @game.title %></h1>
   </div>
   <div class="row">
-    <%= form_with model: @post, url: public_posts_path do |f| %>
+    <%= form_with model: [@tag,@post], url: public_posts_path do |f| %>
       <div class="field">
         <%= f.label :message %>
         <%= f.text_area :message %>
         <%= f.hidden_field :game_id, :value => @game.id %>
+      </div>
+      <div class="check_box">
+        <span>タグ</span>
+        <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name %>
       </div>
       <div class="actions">
         <%= f.submit "投稿する" %>
@@ -20,6 +24,9 @@
       <%= f.submit "検索" %>
     <% end %>
   </div>
+  <% @tags.each do |tags| %>
+    <li><%= link_to tags.name, public_game_path(tag_id: tags.id) %></li>
+  <% end %>
   <div class="row">
     <% if @posts.empty? %>
       <p>該当する投稿がありません。</p>

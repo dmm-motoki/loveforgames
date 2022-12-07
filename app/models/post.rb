@@ -3,4 +3,7 @@ class Post < ApplicationRecord
   belongs_to :game
 
   has_many :comments, dependent: :destroy
+
+  has_many :tagmaps, dependent: :destroy
+  has_many :tags, through: :tagmaps
 end

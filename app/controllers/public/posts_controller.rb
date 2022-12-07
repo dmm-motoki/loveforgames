@@ -21,6 +21,6 @@ class Public::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:message, :user_id, :game_id)
+    params.require(:post).permit(:message, :user_id, :game_id, tag_ids:[])
   end
 end
