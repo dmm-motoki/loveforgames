@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  before_action :user_state, only: [:create]
   # before_action :configure_sign_in_params, only: [:create]
 
   def guest_sign_in
@@ -24,7 +25,18 @@ class Users::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # protected
+  protected
+
+  def user_state
+    @user = User.find_by(name: params[:user][:name])
+    if @user
+      if @user.valid_password?(params[:user][:password]) && (@user.is_active == false)
+        flash[:notice] = "退会済みです。再度ご登録してご利用ください。"
+        redirect_to new_user_registration_path
+      else
+      end
+    end
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params

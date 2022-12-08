@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :games, only: [:index, :new, :create, :show, :edit, :update, :destroy ]
     resources :users, only: [:index, :show]
+    patch '/users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
     resources :requests, only: [:index]
   end
   namespace :public do
@@ -10,8 +11,9 @@ Rails.application.routes.draw do
     resources :requests, only: [:create]
     resources :posts, only: [:show, :create, :destroy]
     resources :comments, only: [:create]
-    resources :users, only: [:show]
-    resources :users do
+    get '/users/:id/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
+    patch '/users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
+    resources :users, only: [:show, :edit, :update] do
       resource :relationships, only: [:create, :destroy]
     end
     get 'homes/top'

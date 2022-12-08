@@ -1,12 +1,22 @@
-<div>
-  <div>
+<div class="container">
+  <div class="row">
     <h1>ユーザー一覧</h1>
   </div>
-  <div>
-    <% @users.each do |users| %>
-      <ul>
-        <li><%= link_to users.name, admin_user_path(users.id) %></li>
-      </ul>
-    <% end %>
+  <div class="row">
+    <table class="table">
+      <% @users.each do |users| %>
+      <tr>
+        <td><%= link_to users.name, admin_user_path(users.id) %></td>
+        <td><%= users.email %></td>
+        <td>
+          <% if users.is_active == true %>
+            <p>有効</p>
+          <% else %>
+            <p>無効</p>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
   </div>
 </div>
