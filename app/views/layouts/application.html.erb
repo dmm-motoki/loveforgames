@@ -22,7 +22,9 @@
               <li class="nav-item"><%= link_to 'リクエスト', admin_requests_path, class: "btn btn-outline-secondary mx-3" %></li>
               <li class="nav-item"><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-outline-secondary mx-3" %></li>
             <% elsif user_signed_in? %>
-              <li class="nav-item"><%= link_to 'マイページ', public_user_path(current_user.id), class: "btn btn-outline-secondary mx-3" %></li>
+              <% if current_user.email != "guest@example.com" %>
+                <li class="nav-item"><%= link_to 'マイページ', public_user_path(current_user.id), class: "btn btn-outline-secondary mx-3" %></li>
+              <% end %>
               <li class="nav-item"><%= link_to 'ゲーム一覧', public_games_path, class: "btn btn-outline-secondary mx-3" %></li>
               <li class="nav-item"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary mx-3" %></li>
             <% else %>

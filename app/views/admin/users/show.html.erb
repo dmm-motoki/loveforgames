@@ -1,5 +1,24 @@
 <div class="container">
   <div class="row">
-    <h1><%= @user.name %>のページ</h1>
+    <h1><%= @user.name %>さんのページ</h1>
+  </div>
+  <div>
+    <p><%= @user.email %></p>
+  </div>
+  <div class="row">
+    <% if @user.is_active == true %>
+      <%= link_to "アカウント無効", admin_account_stop_path(@user.id), method: :patch %>
+    <% else %>
+      <%= link_to "アカウント有効", admin_account_start_path(@user.id), method: :patch %>
+    <% end %>
+
+    <%= link_to "アカウント削除", admin_user_path(@user.id), method: :delete, data: {confirm: "削除すると戻すことはできません。このアカウントの投稿などもすべて削除されます。本当に削除しますか？"} %>
+  </div>
+  <div>
+    <% @posts.each do |posts| %>
+      <ul>
+        <li><%= posts.message %></li>
+      </ul>
+    <% end %>
   </div>
 </div>

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::SessionsController < Devise::SessionsController
+class Public::SessionsController < Devise::SessionsController
   before_action :user_state, only: [:create]
   # before_action :configure_sign_in_params, only: [:create]
 
@@ -27,11 +27,12 @@ class Users::SessionsController < Devise::SessionsController
 
   protected
 
+
   def user_state
     @user = User.find_by(name: params[:user][:name])
     if @user
       if @user.valid_password?(params[:user][:password]) && (@user.is_active == false)
-        flash[:notice] = "退会済みです。再度ご登録してご利用ください。"
+        flash[:notice] = "無効なアカウントです。再度ご登録してご利用ください。"
         redirect_to new_user_registration_path
       else
       end

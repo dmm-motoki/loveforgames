@@ -2,14 +2,18 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :games, only: [:index, :new, :create, :show, :edit, :update, :destroy ]
-    resources :users, only: [:index, :show]
-    patch '/users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
+    resources :users, only: [:index, :show, :destroy]
+    patch '/users/:id/account_stop' => 'users#account_stop', as: 'account_stop'
+    patch '/users/:id/account_start' => 'users#account_start', as: 'account_start'
     resources :requests, only: [:index]
   end
+
   namespace :public do
     resources :games, only: [:index, :show]
     resources :requests, only: [:create]
-    resources :posts, only: [:show, :create, :destroy]
+    resources :posts, only: [:show, :create, :destroy] do
+      resource :favorites, only: [:create, :destroy]
+    end
     resources :comments, only: [:create]
     get '/users/:id/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
     patch '/users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
@@ -20,11 +24,17 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
-    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+    post 'public/users/guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
 
   root "public/homes#top"
-  devise_for :users
-  devise_for :admins
+
+  devise_for :users, skip: [:passwords], controllers: {
+    registrations: "public/registrations",
+    sessions: 'public/sessions'
+  }
+  devise_for :admins, skip: [:registrations, :passwords], controllers: {
+    sessions: "admin/sessions"
+  }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
