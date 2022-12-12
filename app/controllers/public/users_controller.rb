@@ -3,6 +3,8 @@ class Public::UsersController < ApplicationController
     @user = User.find(params[:id])
     @followings = @user.followings
     @followers = @user.followers
+    favorites = FavoriteGame.where(user_id: current_user.id).pluck(:game_id)
+    @favorite_games = Game.find(favorites)
   end
 
   def edit
@@ -16,6 +18,12 @@ class Public::UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def favorites
+    favorites = FavoritePost.where(user_id: current_user.id).pluck(:post_id)
+    @favorites_posts = Post.find(favorites)
+
   end
 
   def unsubscribe

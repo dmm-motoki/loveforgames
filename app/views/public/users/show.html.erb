@@ -20,6 +20,14 @@
     <% end %>
   </div>
   <div class="row">
+    <h3>お気に入りゲーム</h3>
+    <% @favorite_games.each do |favorite_games| %>
+      <ul>
+        <li><%= link_to favorite_games.title, public_game_path(favorite_games.id) %></li>
+      </ul>
+    <% end %>
+  </div>
+  <div class="row">
     <div>
       <h5>フォロー <%= @user.followings.count %></h5>
       <table>

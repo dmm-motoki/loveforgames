@@ -15,10 +15,14 @@
     <%= link_to "アカウント削除", admin_user_path(@user.id), method: :delete, data: {confirm: "削除すると戻すことはできません。このアカウントの投稿などもすべて削除されます。本当に削除しますか？"} %>
   </div>
   <div>
-    <% @posts.each do |posts| %>
-      <ul>
-        <li><%= posts.message %></li>
-      </ul>
-    <% end %>
+    <table class="table">
+      <% @posts.each do |posts| %>
+        <tr>
+          <td><%= link_to posts.game.title, admin_game_path(posts.game.id) %></td>
+          <td><%= link_to posts.message, admin_post_path(posts.id) %></td>
+          <td><%= link_to "削除", admin_post_path(posts.id), method: :delete %></td>
+        </tr>
+      <% end %>
+    </table>
   </div>
 </div>

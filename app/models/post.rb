@@ -7,6 +7,6 @@ class Post < ApplicationRecord
   has_many :tagmaps, dependent: :destroy
   has_many :tags, through: :tagmaps
 
-  has_many :favorites, dependent: :destroy
+  has_many :favorite_posts, dependent: :destroy
 
 end

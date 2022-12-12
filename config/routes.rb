@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :games, only: [:index, :new, :create, :show, :edit, :update, :destroy ]
+    resources :posts, only: [:show, :destroy]
+    resources :comments, only: [:destroy]
     resources :users, only: [:index, :show, :destroy]
     patch '/users/:id/account_stop' => 'users#account_stop', as: 'account_stop'
     patch '/users/:id/account_start' => 'users#account_start', as: 'account_start'
@@ -9,7 +11,9 @@ Rails.application.routes.draw do
   end
 
   namespace :public do
-    resources :games, only: [:index, :show]
+    resources :games, only: [:index, :show] do
+      resource :favorite_games, only: [:create, :destroy]
+    end
     resources :requests, only: [:create]
     resources :posts, only: [:show, :create, :destroy] do
       resource :favorites, only: [:create, :destroy]
@@ -18,6 +22,7 @@ Rails.application.routes.draw do
     get '/users/:id/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
     patch '/users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
     resources :users, only: [:show, :edit, :update] do
+      get :favorites
       resource :relationships, only: [:create, :destroy]
     end
     get 'homes/top'
