@@ -1,14 +1,33 @@
 <div class="container">
-  <div class="row">
-    <h1>Love for games</h1>
+  <div class="row my-5 justify-content-center">
+    <div class="col-md-6 border border-dark bg-light py-3">
+      <h1 class="px-5 mx-auto text-center font-italic">Love For Games</h1>
+    </div>
   </div>
-  <div class="row">
-    <%= link_to "ゲストとしてログイン",  public_users_guest_sign_in_path, method: :post, class: "btn btn-success" %>
+  <div class="row justify-content-center">
+    <div class="col-md-9 bg-light">
+      <p class="font-weight-bold my-5 mx-4 h4 ", style="line-height:2rem">ようこそLove For Gamesへ！</br>
+      このサイトはゲーム好きのためのサイトです。</br>
+      ゲーム好きの仲間を見つけたり、情報や好きな気持ちを共有したり</br>
+      使い方はあなた次第です。</p>
+    </div>
   </div>
-  <div class="row">
-    <%= link_to "ログイン", new_user_session_path, class: "btn btn-success" %>
+  <div class="row mb-5 justify-content-center my-5">
+    <div class="col-md-4 my-3">
+      <%= link_to "ゲストとしてログイン",  public_users_guest_sign_in_path, method: :post, class: "btn btn-success px-5 py-3" %>
+    </div>
+    <div class="col-md-4 bg-light rounded-pill">
+      <p class="my-3 mx-4">ゲストログインの場合</br>
+      投稿やフォロー機能など</br>
+      制限される機能が多数あります。</p>
+    </div>
   </div>
-  <div class="row">
-    <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary" %>
+  <div class="row justify-content-center">
+    <div class="col-md-3">
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-success px-5 py-3 mb-3" %>
+    </div>
+    <div class="col-md-3">
+      <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary px-5 py-3" %>
+    </div>
   </div>
 </div>

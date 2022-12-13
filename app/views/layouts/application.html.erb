@@ -10,26 +10,27 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="bg-dark">
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-info" style="height:100px">
         <div class="container-fluid mx-0">
-          <%= link_to "LoveForGames", root_path, class: "navbar-brand font-weight-bold border border-secondary rounded-lg px-5" %>
+          <%= link_to "LoveForGames", root_path, class: "navbar-brand font-weight-bold border border-secondary rounded-lg px-5 py-2 bg-light" %>
           <ul class="navbar-nav">
             <% if admin_signed_in? %>
-              <li class="nav-item"><%= link_to 'ゲーム一覧', admin_games_path, class: "btn btn-outline-secondary mx-3" %></li>
-              <li class="nav-item"><%= link_to 'ユーザー一覧', admin_users_path, class: "btn btn-outline-secondary mx-3" %></li>
-              <li class="nav-item"><%= link_to 'リクエスト', admin_requests_path, class: "btn btn-outline-secondary mx-3" %></li>
-              <li class="nav-item"><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-outline-secondary mx-3" %></li>
+              <li class="nav-item"><%= link_to 'ゲーム一覧', admin_games_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
+              <li class="nav-item"><%= link_to 'ユーザー一覧', admin_users_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
+              <li class="nav-item"><%= link_to 'リクエスト', admin_requests_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
+              <li class="nav-item"><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
             <% elsif user_signed_in? %>
               <% if current_user.email != "guest@example.com" %>
-                <li class="nav-item"><%= link_to 'マイページ', public_user_path(current_user.id), class: "btn btn-outline-secondary mx-3" %></li>
+                <li class="nav-item"><%= link_to 'マイページ', public_user_path(current_user.id), class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
               <% end %>
-              <li class="nav-item"><%= link_to 'ゲーム一覧', public_games_path, class: "btn btn-outline-secondary mx-3" %></li>
-              <li class="nav-item"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary mx-3" %></li>
+              <li class="nav-item"><%= link_to 'ゲーム一覧', public_games_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
+              <li class="nav-item"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
             <% else %>
 
-              <li class="nav-item"><%= link_to 'ログイン', new_user_session_path, class: "btn btn-outline-secondary mx-3" %></li>
+              <li class="nav-item"><%= link_to 'ログイン', new_user_session_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
+              <li class="nav-item"><%= link_to '新規登録', new_user_registration_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
             <% end %>
           </ul>
         </div>
