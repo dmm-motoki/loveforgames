@@ -1,27 +1,51 @@
 <div class="container">
-  <div class="row">
-    <% @games.each do |games| %>
-      <ul>
-        <li class="list-unstyled">
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h4 class="card-title"><%= link_to games.title, public_game_path(games.id) %></h4>
-              <p class="card-text"><%= games.content %></p>
-            </div>
+  <div class="row justify-content-between">
+    <div class="col-md-4 bg-white py-2 my-5 ml-5">
+      <h1 class="text-center">ゲームリスト</h1>
+    </div>
+    <div class="col-md-3 pt-2 mt-3">
+      <%= form_with url: public_games_path, method: :get do |f| %>
+        <div class="form-row">
+          <div class="field">
+            <%= f.text_field :search, class: 'form-control', placeholder: "キーワード検索" %>
           </div>
-        </li>
-      </ul>
-    <% end %>
+          <div class="actions ml-2">
+            <%= f.submit "検索" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
   <div class="row">
-    <h4>ご希望のゲームが無い？</h4>
-    <%= form_with model: @request, url: public_requests_path do |f| %>
-      <div class="field">
-        <%= f.text_field :title %>
+    <div class="col-md-12 d-flex flex-wrap pt-3">
+      <% @games.each do |games| %>
+        <ul>
+          <li class="list-unstyled">
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h4 class="card-title"><%= link_to games.title, public_game_path(games.id) %></h4>
+                <p class="card-text"><%= games.content %></p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8 bg-light p-4">
+      <h4>ご希望のゲームが無い？</h4>
+      <p>あなたの好きなゲームをおしえてください。</p>
+      <%= form_with model: @request, url: public_requests_path do |f| %>
+      <div class="form-row">
+        <div class="field col-md-6">
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+        <div class="actions">
+          <%= f.submit "送信", class: "btn btn-success" %>
+        </div>
       </div>
-      <div class="actions">
-        <%= f.submit "送信" %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

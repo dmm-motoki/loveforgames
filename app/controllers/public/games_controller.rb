@@ -2,6 +2,11 @@ class Public::GamesController < ApplicationController
   def index
     @games = Game.all
     @request = Request.new
+    if params[:search].present?
+      @games = Game.where("title LIKE ?", '%' + params[:search] + '%')
+    else
+      @games = Game.all
+    end
   end
 
   def show
