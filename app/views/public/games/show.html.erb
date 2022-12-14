@@ -1,70 +1,99 @@
 <div class="container">
-  <div class="row">
-    <h1><%= @game.title %></h1>
-    <% if FavoriteGame.find_by(user_id: current_user.id, game_id: @game.id) %>
-      <%= link_to "★", public_game_favorite_games_path(@game.id), method: :delete %>
-    <% else %>
-      <%= link_to "☆", public_game_favorite_games_path(@game.id), method: :post %>
-    <% end %>
-  </div>
-  <% if current_user.email != "guest@example.com" %>
-  <div class="row">
-    <%= form_with model: [@tag,@post], url: public_posts_path do |f| %>
-      <div class="field">
-        <%= f.label :message %>
-        <%= f.text_area :message %>
-        <%= f.hidden_field :game_id, :value => @game.id %>
-      </div>
-      <div class="check_box">
-        <span>タグ</span>
-        <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name %>
-      </div>
-      <div class="actions">
-        <%= f.submit "投稿する" %>
-      </div>
-    <% end %>
-  </div>
-  <% end %>
-  <div class="row">
-    <%= form_with url: public_game_path, method: :get do |f| %>
-      <%= f.text_field :search, class: 'form-control', placeholder: "キーワード検索" %>
-      <%= f.submit "検索" %>
-    <% end %>
-  </div>
-  <div class="row">
-    <% @tags.each do |tags| %>
-      <ul>
-        <li class="list-group-item"><%= link_to tags.name, public_game_path(tag_id: tags.id) %></li>
-      </ul>
-    <% end %>
-    <%= link_to "いいね一覧", public_user_favorites_path(current_user.id) %>
-  </div>
-  <div class="row">
-    <% if @posts.empty? %>
-      <p>該当する投稿がありません。</p>
-    <% end %>
-    <table class="table table-borderless">
-      <% @posts.reverse_each do |posts| %>
-        <tr>
-          <% if posts.user.is_active == true %>
-            <td>
-                <%= link_to posts.user.name, public_user_path(posts.user.id) %>
-            </td>
-            <td>
-                <%= link_to posts.message, public_post_path(posts.id), class: "text-dark" %>
-            </td>
-            <td>
-              <% if posts.user_id == current_user.id %>
-              <% elsif FavoritePost.find_by(user_id: current_user.id, post_id: posts.id) %>
-                <%= link_to "♥",  public_post_favorites_path(posts.id), method: :delete %>
-              <% else %>
-                <%= link_to "♡",  public_post_favorites_path(posts.id), method: :post %>
-              <% end %>
-            </td>
-          <% else %>
-          <% end %>
-        </tr>
+  <div class="row justify-content-center">
+    <div class="col-md-8 d-flex justify-content-center">
+      <h1 class="bg-light py-3 px-5"><%= @game.title %></h1>
+      <% if FavoriteGame.find_by(user_id: current_user.id, game_id: @game.id) %>
+        <%= link_to public_game_favorite_games_path(@game.id), method: :delete do %>
+          <i class="fa fa-star fa-3x mt-3 ml-3 text-warning"></i>
+        <% end %>
+      <% else %>
+        <%= link_to public_game_favorite_games_path(@game.id), method: :post do %>
+          <i class="fa fa-star fa-3x mt-3 ml-3 text-light"></i>
+        <% end %>
       <% end %>
-    </table>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <% if current_user.email != "guest@example.com" %>
+      <div class="col-md-10 bg-light text-center">
+        <%= form_with model: [@tag,@post], url: public_posts_path do |f| %>
+          <div class="field col-md-10 mx-auto">
+            <%= f.label :message, "投稿フォーム", class: "font-weight-bold h3" %>
+            <%= f.text_area :message, class: "form-control", rows: "5" %>
+            <%= f.hidden_field :game_id, :value => @game.id %>
+          </div>
+          <div class="check_box">
+            <span>タグ：</span>
+            <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name %>
+          </div>
+          <div class="actions">
+            <%= f.submit "投稿する" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tag-grop d-flex">
+        <% @tags.each do |tags| %>
+          <ul class="mb-0">
+            <%= link_to public_game_path(tag_id: tags.id) do %>
+              <li class="list-group-item bg-light"><%= tags.name %></li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <%= link_to "いいね一覧", public_user_favorites_path(current_user.id) %>
+            <%= form_with url: public_game_path, method: :get do |f| %>
+            <div class="form-row">
+              <div class="field">
+                <%= f.text_field :search, class: 'form-control', placeholder: "キーワード検索" %>
+              </div>
+              <div class="actions">
+                <%= f.submit "検索" %>
+              </div>
+            </div>
+            <% end %>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+      <% if @posts.empty? %>
+      <div class="col-md-4 text-center">
+        <p class="bg-light p-5">該当する投稿がありません。</p>
+      </div>
+      <% end %>
+      <div class="col-md-10">
+        <table class="table bg-light">
+          <% @posts.reverse_each do |posts| %>
+            <tr>
+              <% if posts.user.is_active == true %>
+                <td style="width: 20%">
+                    <p class="font-weight-bold"><%= link_to posts.user.name, public_user_path(posts.user.id) %></p>
+                </td>
+                <td>
+                    <%= link_to posts.message, public_post_path(posts.id), class: "text-dark" %>
+                </td>
+                <td style="width: 5%">
+                  <% if posts.user_id == current_user.id %>
+                  <% elsif FavoritePost.find_by(user_id: current_user.id, post_id: posts.id) %>
+                    <%= link_to public_post_favorites_path(posts.id), method: :delete do %>
+                      <i class="fa fa-heart text-danger"></i>
+                    <% end %>
+                  <% else %>
+                    <%= link_to public_post_favorites_path(posts.id), method: :create do %>
+                      <i class="fa fa-heart text-secondary"></i>
+                    <% end %>
+                  <% end %>
+                </td>
+              <% else %>
+              <% end %>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
