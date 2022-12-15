@@ -2,7 +2,7 @@
   <div class="row justify-content-center mt-5 mb-4">
     <% if @user.id == current_user.id %>
       <div class="col-md-4 text-center">
-        <h1 class="bg-light mb-0">マイページ</h1>
+        <h1 class="bg-light mb-0 py-2">マイページ</h1>
       </div>
       <div class="col-md-2 d-flex align-items-end">
         <%= link_to edit_public_user_path(current_user.id) do %>
@@ -11,10 +11,10 @@
       </div>
     <% else %>
       <div class="col-md-6">
-        <h1 class="bg-light text-center"><%= @user.name %>のページ</h1>
+        <h1 class="bg-light text-center mb-0 py-2"><%= @user.name %>のページ</h1>
       </div>
       <% if current_user.email != "guest@example.com" %>
-        <div class="col-md-3">
+        <div class="col-md-3 d-flex align-items-end">
           <% if current_user.email == "guest@example.com" %>
           <% elsif current_user.following?(@user) %>
             <%= link_to "フォロー外す", public_user_relationships_path(@user.id), class: "btn btn-primary", method: :delete %>
@@ -58,12 +58,12 @@
       </div>
     </div>
     <div class="col-md-8">
-      <h3 class="bg-light mb-0 pl-5">お気に入りゲーム</h3>
-      <div class="group bg-light d-flex">
+      <h3 class="bg-light mb-0 pl-5 py-2">お気に入りゲーム</h3>
+      <div class="group bg-light d-flex flex-wrap">
         <% @favorite_games.each do |favorite_games| %>
           <%= link_to public_game_path(favorite_games.id) do %>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item"><%= favorite_games.title %></li>
+            <ul>
+              <li class="list-unstyled"><%= favorite_games.title %></li>
             </ul>
           <% end %>
         <% end %>
