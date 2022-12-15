@@ -36,4 +36,11 @@ class Public::UsersController < ApplicationController
     flash[:notice] = "退会しました"
     redirect_to root_path
   end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :introduction, :email)
+  end
+
 end

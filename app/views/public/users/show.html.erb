@@ -1,52 +1,73 @@
 <div class="container">
-  <div class="row">
+  <div class="row justify-content-center mt-5 mb-4">
     <% if @user.id == current_user.id %>
-      <h1>マイページ</h1>
-      <%= link_to "編集", edit_public_user_path(current_user.id) %>
+      <div class="col-md-4 text-center">
+        <h1 class="bg-light mb-0">マイページ</h1>
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <%= link_to edit_public_user_path(current_user.id) do %>
+          <p class="btn btn-primary mb-0"><i class="fa fa-pen-to-square"></i>編集</p>
+        <% end %>
+      </div>
     <% else %>
       <div class="col-md-6">
-        <h1><%= @user.name %>のページ</h1>
+        <h1 class="bg-light text-center"><%= @user.name %>のページ</h1>
       </div>
       <% if current_user.email != "guest@example.com" %>
         <div class="col-md-3">
           <% if current_user.email == "guest@example.com" %>
           <% elsif current_user.following?(@user) %>
-            <%= link_to "フォロー外す", public_user_relationships_path(@user.id), method: :delete %>
+            <%= link_to "フォロー外す", public_user_relationships_path(@user.id), class: "btn btn-primary", method: :delete %>
           <% else %>
-            <%= link_to "フォローする", public_user_relationships_path(@user.id), method: :post %>
+            <%= link_to "フォローする", public_user_relationships_path(@user.id), class: "btn btn-primary", method: :post %>
           <% end %>
         </div>
       <% end %>
     <% end %>
   </div>
-  <div class="row">
-    <h3>お気に入りゲーム</h3>
-    <% @favorite_games.each do |favorite_games| %>
-      <ul>
-        <li><%= link_to favorite_games.title, public_game_path(favorite_games.id) %></li>
-      </ul>
-    <% end %>
-  </div>
-  <div class="row">
-    <div>
-      <h5>フォロー <%= @user.followings.count %></h5>
-      <table>
-        <% @followings.each do |followings| %>
-        <tr>
-          <td><%= link_to followings.name, public_user_path(followings.id) %></td>
-        </tr>
-        <% end %>
-      </table>
+  <% if @user.introduction.present? %>
+    <div class="row justify-content-center">
+      <div class="col-md-8 bg-light text-center py-2 mb-5">
+        <p class="h5"><%= @user.introduction %></p>
+      </div>
     </div>
-    <div>
-      <h5>フォロワー <%= @user.followers.count %></h5>
-      <table>
-        <% @followers.each do |followers| %>
-        <tr>
-          <td><%= link_to followers.name, public_user_path(followers.id) %></td>
-        </tr>
+  <% end %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="group d-flex bg-light justify-content-between py-2">
+        <div class="ml-2">
+          <h5>フォロー <%= @user.followings.count %></h5>
+          <table class="table table-sm">
+            <% @followings.each do |followings| %>
+            <tr>
+              <td><%= link_to followings.name, public_user_path(followings.id) %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+        <div class="mr-2">
+          <h5>フォロワー <%= @user.followers.count %></h5>
+          <table class="table table-sm">
+            <% @followers.each do |followers| %>
+            <tr>
+              <td><%= link_to followers.name, public_user_path(followers.id) %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h3 class="bg-light mb-0 pl-5">お気に入りゲーム</h3>
+      <div class="group bg-light d-flex">
+        <% @favorite_games.each do |favorite_games| %>
+          <%= link_to public_game_path(favorite_games.id) do %>
+            <ul class="list-group list-group-horizontal">
+              <li class="list-group-item"><%= favorite_games.title %></li>
+            </ul>
+          <% end %>
         <% end %>
-      </table>
+      </div>
     </div>
   </div>
 

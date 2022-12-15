@@ -1,5 +1,30 @@
-<div>
-  <div>
-    <h1>プロフィール編集</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 bg-light text-center mt-5">
+      <h1>プロフィール編集</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 bg-light">
+      <div class="form-group">
+        <%= form_with model: @user, url: public_user_path do |f| %>
+          <div class="field">
+            <%= f.label :name, "ニックネーム" %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div class="field">
+            <%= f.label :introduction, "自己紹介文" %>
+            <%= f.text_area :introduction, class: "form-control" %>
+          </div>
+          <div class="field">
+            <%= f.label :email, "メールアドレス" %>
+            <%= f.text_field :email, class: "form-control" %>
+          </div>
+          <div class="actions">
+            <%= f.submit "変更" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
