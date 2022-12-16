@@ -1,14 +1,37 @@
 <div class="container">
-  <div class="row">
-    <h1><%= @game.title %></h1>
+  <div class="row mt-4 justify-content-center">
+    <div class="col-md-7 text-center">
+      <h1 class="bg-light py-2 mb-0"><%= @game.title %></h1>
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+      <%= link_to "編集する", edit_admin_game_path(@game.id), class: "btn btn-primary px-4 mx-3" %>
+      <%= link_to "削除する", admin_game_path(@game.id), method: :delete, data: { confirm: '削除しますか？'}, class: "btn btn-danger px-4" %>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-md-10">
+  <div class="row justify-content-center">
+    <div class="col-md-10 bg-light text-center py-4 my-5">
       <p><%= @game.content %></p>
     </div>
-    <div class="col-md-4">
-      <%= link_to "編集する", edit_admin_game_path(@game.id) %>
-      <%= link_to "削除する", admin_game_path(@game.id), method: :delete, data: { confirm: '削除しますか？'} %>
+  </div>
+  <div class="row justify-content-center">
+    <% if @posts.empty? %>
+      <div class="col-md-8 bg-light text-center py-4">
+        <p>まだ投稿がありません。</p>
+      </div>
+    <% end %>
+    <div class="col-md-12">
+      <table class="table bg-light">
+        <% @posts.reverse_each do |posts| %>
+          <tr>
+            <td style="width: 20%">
+              <p class="font-weight-bold"><%= posts.user.name %></p>
+            </td>
+            <td>
+              <%= posts.message %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
     </div>
   </div>
 </div>

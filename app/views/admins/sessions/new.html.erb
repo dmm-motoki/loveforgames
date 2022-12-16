@@ -1,24 +1,24 @@
-<h2>管理者ログイン</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 text-center mt-5">
+      <h1 class="bg-light py-2 mb-0">管理者ログイン</h2>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+  <div class="row">
+    <div class="col-md-8 bg-light py-3">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field mb-2 col-md-7 mx-auto">
+          <%= f.label :email, "アドレス", class: "font-weight-bold" %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+        </div>
+        <div class="field col-md-7 mx-auto">
+          <%= f.label :password, "パスワード", class: "font-weight-bold" %><br />
+          <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+        </div>
+        <div class="actions d-flex justify-content-center">
+          <%= f.submit "ログイン", class: "btn btn-success btn-lg mt-4" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

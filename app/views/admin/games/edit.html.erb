@@ -1,20 +1,24 @@
-<div>
-  <div>
-    <h1>ゲーム情報編集</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 text-center mt-4">
+      <h1 class="bg-light py-2 mb-0">ゲーム情報編集</h1>
+    </div>
   </div>
-  <div>
-    <%= form_with model: @game, url: admin_game_path do |f| %>
-      <div class="field">
-        <%= f.label :title %>
-        <%= f.text_field :title %>
-      </div>
-      <div class="field">
-        <%= f.label :content %>
-        <%= f.text_area :content %>
-      </div>
-      <div class="actions">
-        <%= f.submit "変更する" %>
-      </div>
-    <% end %>
+  <div class="row">
+    <div class="col-md-7 bg-light py-4 px-5">
+      <%= form_with model: @game, url: admin_game_path do |f| %>
+        <div class="field ">
+          <%= f.label :title, "タイトル", class: "font-weight-bold" %>
+          <%= f.text_field :title, class: "form-control mb-2" %>
+        </div>
+        <div class="field">
+          <%= f.label :content, "概要", class: "font-weight-bold" %>
+          <%= f.text_area :content, class: "form-control mb-2", rows: "5" %>
+        </div>
+        <div class="actions">
+          <%= f.submit "変更する", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

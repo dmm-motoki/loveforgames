@@ -1,15 +1,27 @@
 <div class="container">
-  <div class="row">
-    <h1>ゲーム一覧</h1>
+  <div class="row mt-4">
+    <div class="col-md-3 text-center ">
+      <h1 class="bg-light mb-0">ゲーム一覧</h1>
+    </div>
+    <div class="col-md-6">
+      <%= link_to "ゲーム追加", new_admin_game_path, class: "btn btn-success" %>
+    </div>
   </div>
   <div class="row">
-    <%= link_to "ゲーム追加", new_admin_game_path, class: "btn btn-success" %>
-  </div>
-  <div>
-    <% @games.each do |games| %>
-      <ul>
-        <li><%= link_to  games.title, admin_game_path(games.id) %></li>
-      </ul>
-    <% end %>
+    <div class="col-md-12 bg-light d-flex flex-wrap py-4">
+      <% @games.each do |games| %>
+        <ul>
+          <li class="list-unstyled">
+            <%= link_to admin_game_path(games.id) do %>
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <%= games.title %>
+                </div>
+              </div>
+            <% end %>
+          </li>
+        </ul>
+      <% end %>
+    </div>
   </div>
 </div>
