@@ -24,10 +24,10 @@
         <% @posts.reverse_each do |posts| %>
           <tr>
             <td style="width: 20%">
-              <p class="font-weight-bold"><%= posts.user.name %></p>
+              <p class="font-weight-bold"><%= link_to posts.user.name, admin_user_path(posts.user.id) %></p>
             </td>
             <td>
-              <%= posts.message %>
+              <%= link_to posts.message, admin_post_path(posts.id), class: "text-dark" %>
             </td>
           </tr>
         <% end %>

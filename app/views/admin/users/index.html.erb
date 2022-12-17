@@ -1,24 +1,28 @@
 <div class="container">
   <div class="row">
-    <h1>ユーザー一覧</h1>
+    <div class="col-md-5 text-center">
+      <h1 class="bg-light mb-0 py-2 mt-5">ユーザー一覧</h1>
+    </div>
   </div>
   <div class="row">
-    <table class="table">
-      <% @users.each do |users| %>
-      <tr>
-        <% if users.email != "guest@example.com" %>
-          <td><%= link_to users.name, admin_user_path(users.id) %></td>
-          <td><%= users.email %></td>
-          <td>
-            <% if users.is_active == true %>
-              <p>有効</p>
-            <% else %>
-              <p>無効</p>
-            <% end %>
-          </td>
+    <div class="col-md-12 bg-light">
+      <table class="table">
+        <% @users.each do |users| %>
+        <tr>
+          <% if users.email != "guest@example.com" %>
+            <td><%= link_to users.name, admin_user_path(users.id) %></td>
+            <td><%= users.email %></td>
+            <td>
+              <% if users.is_active == true %>
+                <p class="text-success font-weight-bold">有効</p>
+              <% else %>
+                <p class="text-muted font-weight-bold">無効</p>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
         <% end %>
-      </tr>
-      <% end %>
-    </table>
+      </table>
+    </div>
   </div>
 </div>
