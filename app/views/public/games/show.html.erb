@@ -69,41 +69,28 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center">
+  <div class="row justify-content-center bg-secondary">
     <% if @posts.empty? %>
-      <div class="col-md-4 text-center">
+      <div class="col-md-4 text-center my-5">
         <p class="bg-light p-5">該当する投稿がありません。</p>
       </div>
-    <% end %>
-    <div class="col-md-12">
-      <table class="table bg-light">
+    <% else %>
+      <h1 class="mt-3 ml-5 bg-light px-4 py-2">投稿リスト</h3>
+      <div class="col-md-12 my-5">
         <% @posts.reverse_each do |posts| %>
-          <tr>
-            <% if posts.user.is_active == true %>
-              <td style="width: 20%">
-                <p class="font-weight-bold"><%= link_to posts.user.name, public_user_path(posts.user.id) %></p>
-              </td>
-              <td>
-                <%= link_to posts.message, public_post_path(posts.id), class: "text-dark" %>
-              </td>
-              <td style="width: 5%">
-                <% if posts.user_id == current_user.id %>
-                <% elsif FavoritePost.find_by(user_id: current_user.id, post_id: posts.id) %>
-                  <%= link_to public_post_favorites_path(posts.id), method: :delete do %>
-                    <i class="fa fa-heart text-danger"></i>
-                  <% end %>
-                <% else %>
-                  <%= link_to public_post_favorites_path(posts.id), method: :create do %>
-                    <i class="fa fa-heart text-secondary"></i>
-                  <% end %>
-                <% end %>
-              </td>
-            <% else %>
-            <% end %>
-          </tr>
+          <ul>
+            <li class="list-unstyled">
+              <div class="card mr-5">
+                <div class="card-body" style="width:90%;">
+                  <h5 class="card-title"><%= link_to posts.user.name, public_user_path(posts.user.id), class: "font-weight-bold" %></h5>
+                  <p class="card-text"><%= link_to posts.message, public_post_path(posts.id), class:"text-dark" %></p>
+                </div>
+              </div>
+            </li>
+          </ul>
         <% end %>
-      </table>
-    </div>
+      </div>
+    <% end %>
   </div>
   <%= link_to "いいね一覧", public_user_favorites_path(current_user.id) %>
 </div>
