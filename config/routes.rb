@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show, :destroy]
     patch '/users/:id/account_stop' => 'users#account_stop', as: 'account_stop'
     patch '/users/:id/account_start' => 'users#account_start', as: 'account_start'
-    resources :requests, only: [:index]
+    resources :requests, only: [:index, :destroy]
   end
 
   namespace :public do
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:show, :create, :destroy] do
       resource :favorites, only: [:create, :destroy]
     end
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :destroy]
     get '/users/:id/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
     patch '/users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
     resources :users, only: [:show, :edit, :update] do

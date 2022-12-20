@@ -1,9 +1,15 @@
 <div class="container">
-  <div class="row">
-    <% @requests.each do |requests| %>
-      <ul>
-        <li><%= requests.title %></li>
-      </ul>
-    <% end %>
+  <div class="row bg-secondary justify-content-center py-5 my-5">
+    <h1 class="bg-light mb-0 px-5 py-2">リクエストリスト</h1>
+    <div class="col-md-11 bg-light d-flex flex-wrap py-4">
+      <table class="table">
+        <% @requests.each do |requests| %>
+          <tr>
+            <td><%= requests.title %></td>
+            <td style="width:10%"><%= link_to "削除", admin_request_path(requests.id), method: :delete, class: "btn btn-danger" %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>

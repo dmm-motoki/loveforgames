@@ -1,19 +1,26 @@
 <div class="container">
-  <div class="row">
-    <h1><%= @post.user.name %>さんの投稿</h1>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <p><%= @post.message %></p>
-      <%= link_to "投稿削除", admin_destroy_in_postshow_path(@post.id), method: :delete, data: {confirm: "本当に削除しますか？"} %>
+  <div class="row justify-content-center my-5">
+    <div class="col-md-6 text-center">
+      <h1 class="bg-light mb-0 py-2"><%= @post.user.name %>さんの投稿</h1>
     </div>
-    <div class="col-md-8">
-      <table class="table">
+    <div class="col-md-2 d-flex align-items-end">
+      <%= link_to "投稿削除", admin_destroy_in_postshow_path(@post.id), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger" %>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8 bg-light text-center mb-5">
+      <p class="bg-light h5 py-4"><%= @post.message %></p>
+    </div>
+  </div>
+  <div class="row justify-content-center bg-secondary py-4">
+    <h3 class="bg-light px-5 py-2">コメント</h3>
+    <div class="col-md-12">
+      <table class="table bg-light">
         <% @comments.each do |comments| %>
           <tr>
-            <td><%= comments.user.name %></td>
+            <td style="width:20%"><%= link_to comments.user.name, admin_user_path(comments.user.id) %></td>
             <td><%= comments.comments_content %></td>
-            <td><%= link_to "削除", admin_comment_path(comments.id), method: :delete, data: {confirm: "本当に削除しますか？"} %></td>
+            <td style="width:10%"><%= link_to "削除", admin_comment_path(comments.id), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger" %></td>
           </tr>
         <% end %>
       </table>

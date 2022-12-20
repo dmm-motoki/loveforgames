@@ -50,8 +50,11 @@
       <table class="table bg-light">
         <% @comments.each do |comments| %>
         <tr>
-          <td><%= link_to comments.user.name, public_user_path(comments.user.id) %></td>
+          <td style="width:30%"><%= link_to comments.user.name, public_user_path(comments.user.id) %></td>
           <td><%= comments.comments_content %></td>
+          <% if comments.user_id == current_user.id %>
+            <td style="width:15%"><%= link_to "取り消す", public_comment_path(comments.id), method: :delete, class: "btn btn-danger" %></td>
+          <% end %>
         </tr>
         <% end %>
       </table>

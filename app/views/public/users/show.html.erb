@@ -27,7 +27,7 @@
   </div>
   <% if @user.introduction.present? %>
     <div class="row justify-content-center">
-      <div class="col-md-8 bg-light text-center py-2 mb-5">
+      <div class="col-md-8 bg-light text-center py-4 mb-5">
         <p class="h5"><%= @user.introduction %></p>
       </div>
     </div>
@@ -70,6 +70,45 @@
       </div>
     </div>
   </div>
-
+  <div class="row bg-secondary justify-content-center py-4 my-5">
+    <h1 class="bg-light px-5 py-2 mb-0">投稿リスト</h1>
+      <% if @user.posts.empty? %>
+        <div class="col-md-10 bg-light">
+          <p>まだ投稿がありません。</p>
+        </div>
+      <% else %>
+        <div class="col-md-11 bg-light py-4">
+          <% @user.posts.reverse_each do |posts| %>
+            <ul>
+              <li class="list-unstyled">
+                <div class="card">
+                  <div class="card-title mt-2 ml-4 mb-0">
+                    <h5 class="mb-0"><%= link_to posts.game.title, public_game_path(posts.game.id) %></h5>
+                  </div>
+                  <div class="card-body">
+                    <p><%= link_to posts.message, public_post_path(posts.id), class: "text-dark" %></p>
+                    <div class="d-flex flex-wrap flex-row-reverse">
+                    <% if FavoritePost.find_by(user_id: current_user.id, post_id: posts.id) %>
+                      <div>
+                        <%= link_to public_post_favorites_path(posts.id), method: :delete do %>
+                          <p class="text-dark ml-3 mb-0"><i class="fa fa-heart text-danger"></i> <%= posts.favorite_posts.count %></p>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <div>
+                        <%= link_to public_post_favorites_path(posts.id), method: :create do %>
+                          <p class="text-dark ml-3 mb-0"><i class="fa fa-heart text-secondary"></i> <%= posts.favorite_posts.count %></p>
+                        <% end %>
+                      </div>
+                    <% end %>
+                    <p class="mb-0">コメント <%= posts.comments.count %></p>
+                  </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
   </div>
 </div>
