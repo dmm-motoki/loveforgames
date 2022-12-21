@@ -78,8 +78,8 @@
         </div>
       <% else %>
         <div class="col-md-11 bg-light py-4">
-          <% @user.posts.reverse_each do |posts| %>
-            <ul>
+          <ul>
+            <% @posts.reverse_each do |posts| %>
               <li class="list-unstyled">
                 <div class="card">
                   <div class="card-title mt-2 ml-4 mb-0">
@@ -106,8 +106,9 @@
                   </div>
                 </div>
               </li>
-            </ul>
-          <% end %>
+            <% end %>
+          </ul>
+          <%= paginate @posts %>
         </div>
       <% end %>
   </div>

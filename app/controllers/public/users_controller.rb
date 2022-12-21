@@ -1,6 +1,7 @@
 class Public::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
+    @posts = Post.where(user_id: @user.id).page(params[:page]).per(10)
     @followings = @user.followings
     @followers = @user.followers
     favorites = FavoriteGame.where(user_id: current_user.id).pluck(:game_id)

@@ -1,6 +1,6 @@
 class Admin::RequestsController < ApplicationController
   def index
-    @requests = Request.all
+    @requests = Request.all.page(params[:page]).per(20)
   end
 
   def destroy

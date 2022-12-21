@@ -1,6 +1,6 @@
 class Admin::GamesController < ApplicationController
   def index
-    @games = Game.all
+    @games = Game.all.page(params[:page]).per(30)
   end
 
   def new
@@ -18,7 +18,7 @@ class Admin::GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @posts = Post.where(game_id: @game.id)
+    @posts = Post.where(game_id: @game.id).page(params[:page]).per(10)
   end
 
   def edit

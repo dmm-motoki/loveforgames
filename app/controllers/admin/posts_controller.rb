@@ -1,7 +1,7 @@
 class Admin::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
-    @comments = @post.comments
+    @comments = Comment.where(post_id: @post.id).page(params[:page]).per(10)
   end
 
   def destroy

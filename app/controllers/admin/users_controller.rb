@@ -1,11 +1,11 @@
 class Admin::UsersController < ApplicationController
   def index
-    @users = User.all
+    @users = User.all.page(params[:page]).per(20)
   end
 
   def show
     @user = User.find(params[:id])
-    @posts = Post.where(user_id: @user.id)
+    @posts = Post.where(user_id: @user.id).page(params[:page]).per(10)
   end
 
   def destroy

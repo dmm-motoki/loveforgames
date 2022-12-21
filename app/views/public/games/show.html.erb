@@ -77,8 +77,8 @@
       </div>
     <% else %>
       <div class="col-md-12 my-5">
-        <% @posts.reverse_each do |posts| %>
-          <ul>
+        <ul>
+          <% @posts.reverse_each do |posts| %>
             <li class="list-unstyled">
               <div class="card mr-5">
                 <div class="card-title d-flex flex-wrap justify-content-between pl-5 pt-3 mb-0">
@@ -106,8 +106,9 @@
                 </div>
               </div>
             </li>
-          </ul>
-        <% end %>
+          <% end %>
+        </ul>
+        <%= paginate @posts %>
       </div>
     <% end %>
   </div>
