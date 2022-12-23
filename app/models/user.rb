@@ -14,6 +14,9 @@ class User < ApplicationRecord
   has_many :favorite_posts, dependent: :destroy
   has_many :favorite_games, dependent: :destroy
 
+  has_many :entries, dependent: :destroy
+  has_many :messages, dependent: :destroy
+
   validates :name,
     length: { minimum: 1, maximum: 10 },
     uniqueness: true

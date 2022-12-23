@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <h1><%= @anoter_entry.user.name %>さんとのメッセージ</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <% @messages.each do |messages| %>
+        <% if messages.user_id == current_user.id %>
+          <p><%= messages.direct_message %></p>
+        <% else %>
+          <p><%= messages.direct_message %></p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <%= form_with model: @message, url: public_messages_path do |f| %>
+        <%= f.text_field :direct_message %>
+        <%= f.hidden_field :room_id, :value => @room.id %>
+        <%= f.submit "送信" %>
+      <% end %>
+    </div>
+  </div>
+</div>

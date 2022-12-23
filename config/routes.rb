@@ -26,6 +26,8 @@ Rails.application.routes.draw do
       get :favorites
       resource :relationships, only: [:create, :destroy]
     end
+    resources :messages, only: [:create]
+    resources :rooms, only: [:create, :index, :show]
     get 'homes/top'
   end
 

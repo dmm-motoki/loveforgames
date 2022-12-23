@@ -24,6 +24,18 @@
         </div>
       <% end %>
     <% end %>
+    <% unless @user.id == current_user.id %>
+      <% if @is_room == true %>
+        <%= link_to 'メッセージへ', public_room_path(@room_id) %>
+      <% else %>
+        <%= form_with model: @room, url: public_rooms_path do |f| %>
+          <%= fields_for @entry do |e| %>
+            <%= e.hidden_field :user_id, value: @user.id %>
+          <% end %>
+          <%= f.submit "メッセージへ" %>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
   <% if @user.introduction.present? %>
     <div class="row justify-content-center">
