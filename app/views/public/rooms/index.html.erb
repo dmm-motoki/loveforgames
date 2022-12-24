@@ -1,2 +1,23 @@
-<h1>Public::Rooms#:index</h1>
-<p>Find me in app/views/public/rooms/:index.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>ＤＭ一覧</h1>
+    </div>
+  </div>
+  <div>
+    <div>
+      <ul class="list-unstyled">
+        <% @another_entries.each do |entries| %>
+          <li>
+            <div class="card">
+              <div class="card-title"><%= entries.user.name%></div>
+              <div class="card-body">
+                <p><%= entries.room.messages.order(updated_at: :desc).limit(1).direct_message %></p>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

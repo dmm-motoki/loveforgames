@@ -4,7 +4,7 @@ class Public::MessagesController < ApplicationController
   def create
     message = Message.new(message_params)
     message.user_id = current_user.id
-    if message.save!
+    if message.save
       redirect_to public_room_path(message.room)
     else
       redirect_back(fallback_location: root_path)

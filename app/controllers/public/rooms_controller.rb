@@ -9,7 +9,7 @@ class Public::RoomsController < ApplicationController
   end
 
   def index
-    current_entries = current_user.entries
+    current_entries = Entry.where(user_id: current_user.id)
     my_room_id = []
     current_entries.each do |entry|
       my_room_id << entry.room.id

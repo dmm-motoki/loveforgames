@@ -1,27 +1,51 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-7">
-      <h1><%= @anoter_entry.user.name %>さんとのメッセージ</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-7 text-center mt-4">
+      <h1 class="bg-light py-3"><%= @anoter_entry.user.name %>さんとのメッセージ</h1>
     </div>
   </div>
-  <div class="row">
-    <div>
-      <% @messages.each do |messages| %>
-        <% if messages.user_id == current_user.id %>
-          <p><%= messages.direct_message %></p>
-        <% else %>
-          <p><%= messages.direct_message %></p>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-  <div class="row">
-    <div>
+  <div class="row justify-content-center">
+    <div class="col-md-11 pt-3">
       <%= form_with model: @message, url: public_messages_path do |f| %>
-        <%= f.text_field :direct_message %>
+      <div class="d-flex flex-wrap justify-content-center">
+        <%= f.text_field :direct_message, class: "form-control col-9" %>
         <%= f.hidden_field :room_id, :value => @room.id %>
-        <%= f.submit "送信" %>
+        <%= f.submit "送信", class: "form-control col-1 ml-2" %>
+      </div>
       <% end %>
+    </div>
+  </div>
+  <div class="row justify-content-center py-4 mb-4">
+    <div class="col-md-11 py-4 overflow-auto bg-secondary" style="height:800px;">
+      <table class="table">
+        <% @messages.reverse_each do |messages| %>
+          <% if messages.user_id == current_user.id %>
+            <tr>
+              <td class="bg-secondary">
+                <div class="d-flex justify-content-between">
+                  <%= time_ago_in_words(messages.created_at)%>前
+                  <p class="font-weight-bold mb-0">あなた</p>
+                </div>
+                <div class="bg-light float-right rounded col-8 my-2 py-2">
+                  <p class="d-inline h5" style="line-height:2rem"><%= messages.direct_message %></p>
+                </div>
+              </td>
+            </tr>
+          <% else %>
+            <tr>
+              <td class="bg-secondary">
+                <div class="d-flex justify-content-between">
+                  <p class="font-weight-bold bg-secondary mb-0"><%= messages.user.name%></p>
+                  <%= time_ago_in_words(messages.created_at)%>前
+                </div>
+                <div class="bg-light rounded col-8 my-2 py-2">
+                  <p class="d-inline h5" style="line-height:2rem"><%= messages.direct_message %></p>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
     </div>
   </div>
 </div>
