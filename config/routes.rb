@@ -21,8 +21,7 @@ Rails.application.routes.draw do
     end
     resources :comments, only: [:create, :destroy]
     get '/users/:id/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
-    patch '/users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
-    resources :users, only: [:show, :edit, :update] do
+    resources :users, only: [:show, :edit, :update, :destroy] do
       get :favorites
       resource :relationships, only: [:create, :destroy]
     end

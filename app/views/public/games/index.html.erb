@@ -17,34 +17,43 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12 d-flex flex-wrap pt-3">
-      <% @games.each do |games| %>
-        <ul>
-          <li class="list-unstyled">
-            <div class="card" style="width: 18rem;">
-              <div class="card-title mt-3 ml-4">
-                <h4><%= link_to games.title, public_game_path(games.id) %></h4>
-              </div>
-              <div class="card-body pt-0 d-flex flex-row-reverse">
-                <p class="mx-4 mb-0">投稿 <%= games.posts.count %>件</p>
-                <% if FavoriteGame.find_by(user_id: current_user.id, game_id: games.id) %>
-                  <%= link_to public_game_favorite_games_path(games.id), method: :delete do %>
+    <div class="col-md-12 pt-3">
+      <div class=" d-flex flex-wrap">
+        <% @games.each do |games| %>
+          <ul>
+            <li class="list-unstyled">
+              <div class="card" style="width: 18rem;">
+                <div class="card-title mt-3 ml-4">
+                  <h4><%= link_to games.title, public_game_path(games.id) %></h4>
+                </div>
+                <div class="card-body pt-0 d-flex flex-row-reverse">
+                  <p class="mx-4 mb-0">投稿 <%= games.posts.count %>件</p>
+                  <% if current_user.email == "guest@example.com" %>
                     <p class="text-dark mb-0"><i class="fa fa-star text-warning"></i> <%= games.favorite_games.count %></p>
+                  <% else %>
+                    <% if FavoriteGame.find_by(user_id: current_user.id, game_id: games.id) %>
+                      <%= link_to public_game_favorite_games_path(games.id), method: :delete do %>
+                        <p class="text-dark mb-0"><i class="fa fa-star text-warning"></i> <%= games.favorite_games.count %></p>
+                      <% end %>
+                    <% else %>
+                      <%= link_to public_game_favorite_games_path(games.id), method: :post do %>
+                        <p class="text-dark mb-0"><i class="fa fa-star text-secondary"></i> <%= games.favorite_games.count %></p>
+                      <% end %>
+                    <% end %>
                   <% end %>
-                <% else %>
-                  <%= link_to public_game_favorite_games_path(games.id), method: :post do %>
-                    <p class="text-dark mb-0"><i class="fa fa-star text-secondary"></i> <%= games.favorite_games.count %></p>
-                  <% end %>
-                <% end %>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
-      <% end %>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+      <div class="d-flex justify-content-center mb-4">
+        <%= paginate @games %>
+      </div>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-md-8 bg-light p-4">
+    <div class="col-md-8 bg-light p-4 mb-5">
       <h4>ご希望のゲームが無い？</h4>
       <p>あなたの好きなゲームをおしえてください。</p>
       <%= form_with model: @request, url: public_requests_path do |f| %>

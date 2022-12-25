@@ -1,12 +1,28 @@
-<div>
-  <div>
-    <h1>お気に入り投稿一覧</h1>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 mt-4 text-center">
+      <h1 class="bg-light py-2">お気に入り投稿一覧</h1>
+    </div>
   </div>
-  <div>
-    <% @favorites_posts.each do |favorites| %>
-      <ul>
-        <li><%= favorites.message %></li>
-      </ul>
-    <% end %>
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <% @favorites_posts.each do |favorites| %>
+        <ul class="list-unstyled">
+          <li>
+            <div class="card">
+              <div class="card-title d-flex flex-wrap mb-0">
+                <p class="col-4 mb-0 mt-2"><%= link_to favorites.user.name, public_user_path(favorites.user.id) %></p>
+                <p class="col-7 mb-0 mt-2"><%= link_to favorites.game.title, public_game_path(favorites.game.id) %></p>
+              </div>
+              <%= link_to public_post_path(favorites.id) do %>
+                <div class="card-body text-dark">
+                  <%= favorites.message %>
+                </div>
+              <% end %>
+            </div>
+          </li>
+        </ul>
+      <% end %>
+    </div>
   </div>
 </div>

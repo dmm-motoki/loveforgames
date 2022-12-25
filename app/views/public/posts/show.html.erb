@@ -11,59 +11,70 @@
       <div class="col-md-7 text-center">
         <h1 class="bg-light py-3 mb-0"><%= @post.user.name %>さんの投稿</h1>
       </div>
-      <% if FavoritePost.find_by(user_id: current_user.id, post_id: @post.id) %>
-        <div class="col-md-2">
-          <%= link_to public_post_favorites_path(@post.id), method: :delete do %>
-            <i class="fa fa-heart text-danger fa-3x mt-4"></i>
-          <% end %>
-        </div>
+      <% if current_user.email != "guest@example.com" %>
+        <% if FavoritePost.find_by(user_id: current_user.id, post_id: @post.id) %>
+          <div class="col-md-2">
+            <%= link_to public_post_favorites_path(@post.id), method: :delete do %>
+              <i class="fa fa-heart text-danger fa-3x mt-4"></i>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="col-md-2">
+            <%= link_to public_post_favorites_path(@post.id), method: :create do %>
+              <i class="fa fa-heart text-secondary fa-3x mt-4"></i>
+            <% end %>
+          </div>
+        <% end %>
       <% else %>
-        <div class="col-md-2">
-          <%= link_to public_post_favorites_path(@post.id), method: :create do %>
-            <i class="fa fa-heart text-secondary fa-3x mt-4"></i>
-          <% end %>
-        </div>
       <% end %>
     <% end %>
   </div>
-  <div class="row">
-    <div class="col-md-10 bg-light text-center py-3 my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 bg-light rounded py-3 pl-5 my-5">
+      <div class="d-flex justify-content-between">
+        <h4 class="ml-4"><%= @post.game.title%></h4>
+        <p class="mb-0 text-right"><%=@post.created_at.strftime('%Y/%m/%d %H:%M')%></p>
+      </div>
       <p><%= @post.message %></p>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="group bg-light px-4 py-3">
-        <h4>コメントを送ろう</h4>
-        <%= form_with model: @comment, url: public_comments_path do |f| %>
-          <div class="field m">
-            <%= f.text_area :comments_content, class: "form-control", rows: "4" %>
-            <%= f.hidden_field :post_id, value: @post.id %>
-          </div>
-          <div class="action">
-            <%= f.submit "送信" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="col-md-9">
-      <table class="table bg-light">
-        <% @comments.each do |comments| %>
-        <tr>
-          <td style="width:30%"><%= link_to comments.user.name, public_user_path(comments.user.id) %></td>
-          <td><%= comments.comments_content %></td>
-          <% if comments.user_id == current_user.id %>
-            <td style="width:15%"><%= link_to "取り消す", public_comment_path(comments.id), method: :delete, class: "btn btn-danger" %></td>
+  <div class="row justify-content-center">
+    <% if current_user.email != "guest@example.com" %>
+      <div class="col-md-3">
+        <div class="group bg-light px-4 py-3">
+          <h4>コメントを送ろう</h4>
+          <%= form_with model: @comment, url: public_comments_path do |f| %>
+            <div class="field m">
+              <%= f.text_area :comments_content, class: "form-control", rows: "4" %>
+              <%= f.hidden_field :post_id, value: @post.id %>
+            </div>
+            <div class="action">
+              <%= f.submit "送信", class: "form-control col-5" %>
+            </div>
           <% end %>
-        </tr>
-        <% end %>
-      </table>
-      <%= paginate @comments %>
-    </div>
-  </div>
-  <div class="row flex-row-reverse">
-    <div class="col-md-2 mt-4">
-      <%= link_to "exit", public_game_path(@post.game_id), class: "btn btn-secondary" %>
+        </div>
+      </div>
+    <% end %>
+    <div class="col-md-9">
+      <% if @post.comments.present? %>
+        <table class="table bg-light">
+          <% @comments.each do |comments| %>
+          <tr>
+            <td style="width:30%"><%= link_to comments.user.name, public_user_path(comments.user.id) %></td>
+            <td><%= comments.comments_content %></td>
+            <% if comments.user_id == current_user.id %>
+              <td style="width:15%"><%= link_to "取り消す", public_comment_path(comments.id), method: :delete, class: "btn btn-danger" %></td>
+            <% end %>
+          </tr>
+          <% end %>
+        </table>
+        <div class="d-flex flex-wrap justify-content-between mb-4">
+          <%= paginate @comments %>
+          <%= link_to "exit", public_game_path(@post.game_id), class: "btn btn-secondary" %>
+        </div>
+      <% else %>
+        <p class="bg-light text-center p-5">コメントはありません。</p>
+      <% end %>
     </div>
   </div>
 </div>

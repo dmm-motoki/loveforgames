@@ -4,17 +4,20 @@
       <div class="col-md-4 text-center">
         <h1 class="bg-light mb-0 py-2">マイページ</h1>
       </div>
-      <div class="col-md-2 d-flex align-items-end">
+      <div class="col-md-1 px-0 ml-3 d-flex align-items-end">
         <%= link_to edit_public_user_path(current_user.id) do %>
           <p class="btn btn-primary mb-0"><i class="fa fa-pen-to-square"></i>編集</p>
         <% end %>
       </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <%= link_to "アカウント削除", public_unsubscribe_path(current_user.id), class: "btn btn-danger" %>
+      </div>
     <% else %>
-      <div class="col-md-6">
+      <div class="col-md-7">
         <h1 class="bg-light text-center mb-0 py-2"><%= @user.name %>のページ</h1>
       </div>
       <% if current_user.email != "guest@example.com" %>
-        <div class="col-md-3 d-flex align-items-end">
+        <div class="col-md-2 d-flex align-items-end">
           <% if current_user.email == "guest@example.com" %>
           <% elsif current_user.following?(@user) %>
             <%= link_to "フォロー外す", public_user_relationships_path(@user.id), class: "btn btn-primary", method: :delete %>
@@ -22,18 +25,18 @@
             <%= link_to "フォローする", public_user_relationships_path(@user.id), class: "btn btn-primary", method: :post %>
           <% end %>
         </div>
-      <% end %>
-    <% end %>
-    <% unless @user.id == current_user.id %>
-      <% if @is_room == true %>
-        <%= link_to 'メッセージへ', public_room_path(@room_id) %>
-      <% else %>
-        <%= form_with model: @room, url: public_rooms_path do |f| %>
-          <%= fields_for @entry do |e| %>
-            <%= e.hidden_field :user_id, value: @user.id %>
+        <div class="col-md-2 d-flex align-items-end">
+          <% if @is_room == true %>
+            <%= link_to 'メッセージへ', public_room_path(@room_id), class: "btn btn-primary" %>
+          <% else %>
+            <%= form_with model: @room, url: public_rooms_path do |f| %>
+              <%= fields_for @entry do |e| %>
+                <%= e.hidden_field :user_id, value: @user.id %>
+              <% end %>
+              <%= f.submit "メッセージへ", class: "btn btn-primary" %>
+            <% end %>
           <% end %>
-          <%= f.submit "メッセージへ" %>
-        <% end %>
+        </div>
       <% end %>
     <% end %>
   </div>
@@ -83,7 +86,12 @@
     </div>
   </div>
   <div class="row bg-secondary justify-content-center py-4 my-5">
-    <h1 class="bg-light px-5 py-2 mb-0">投稿リスト</h1>
+    <div class="col-md-10 d-flex justify-content-between">
+      <h1 class="bg-light px-5 py-2 mb-0">投稿リスト</h1>
+      <div>
+        <%= link_to "いいね一覧", public_user_favorites_path(current_user.id), class: "btn btn-primary" %>
+      </div>
+    </div>
       <% if @user.posts.empty? %>
         <div class="col-md-10 bg-light">
           <p>まだ投稿がありません。</p>
@@ -91,36 +99,43 @@
       <% else %>
         <div class="col-md-11 bg-light py-4">
           <ul>
-            <% @posts.reverse_each do |posts| %>
+            <% @posts.each do |posts| %>
               <li class="list-unstyled">
                 <div class="card">
-                  <div class="card-title mt-2 ml-4 mb-0">
+                  <div class="card-title mt-2 mx-4 mb-0 d-flex justify-content-between">
                     <h5 class="mb-0"><%= link_to posts.game.title, public_game_path(posts.game.id) %></h5>
+                    <p><%= posts.created_at.strftime('%Y/%m/%d %H:%M')%></p>
                   </div>
                   <div class="card-body">
                     <p><%= link_to posts.message, public_post_path(posts.id), class: "text-dark" %></p>
                     <div class="d-flex flex-wrap flex-row-reverse">
-                    <% if FavoritePost.find_by(user_id: current_user.id, post_id: posts.id) %>
-                      <div>
-                        <%= link_to public_post_favorites_path(posts.id), method: :delete do %>
-                          <p class="text-dark ml-3 mb-0"><i class="fa fa-heart text-danger"></i> <%= posts.favorite_posts.count %></p>
+                      <% if current_user.email != "guest@example.com" %>
+                        <% if FavoritePost.find_by(user_id: current_user.id, post_id: posts.id) %>
+                          <div>
+                            <%= link_to public_post_favorites_path(posts.id), method: :delete do %>
+                              <p class="text-dark ml-3 mb-0"><i class="fa fa-heart text-danger"></i> <%= posts.favorite_posts.count %></p>
+                            <% end %>
+                          </div>
+                        <% else %>
+                          <div>
+                            <%= link_to public_post_favorites_path(posts.id), method: :create do %>
+                              <p class="text-dark ml-3 mb-0"><i class="fa fa-heart text-secondary"></i> <%= posts.favorite_posts.count %></p>
+                            <% end %>
+                          </div>
                         <% end %>
-                      </div>
-                    <% else %>
-                      <div>
-                        <%= link_to public_post_favorites_path(posts.id), method: :create do %>
-                          <p class="text-dark ml-3 mb-0"><i class="fa fa-heart text-secondary"></i> <%= posts.favorite_posts.count %></p>
-                        <% end %>
-                      </div>
-                    <% end %>
-                    <p class="mb-0">コメント <%= posts.comments.count %></p>
+                      <% else %>
+                        <p class="text-dark ml-3 mb-0"><i class="fa fa-heart text-danger"></i> <%= posts.favorite_posts.count %></p>
+                      <% end %>
+                      <p class="mb-0">コメント <%= posts.comments.count %></p>
                   </div>
                   </div>
                 </div>
               </li>
             <% end %>
           </ul>
-          <%= paginate @posts %>
+          <div class="d-flex justify-content-center">
+            <%= paginate @posts %>
+          </div>
         </div>
       <% end %>
   </div>

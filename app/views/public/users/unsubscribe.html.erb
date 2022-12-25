@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row justify-content-center rounded-pill bg-light my-5 py-5">
+    <div class="col-md-10 text-center">
+      <h1>本当にアカウントを消しますか？</h1>
+      <p class="h4 my-4">アカウントを消すと投稿などもすべて削除されます。<br>
+      復旧することもできません。</p>
+      <h3>本当に消しますか？</h3>
+    </div>
+    <div class="col-md-8 my-5 d-flex justify-content-between">
+      <%= link_to "アカウントを消す", public_user_path(current_user.id), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-lg btn-danger col-4" %>
+      <%= link_to "戻る", public_user_path(current_user.id), class: "btn btn-lg btn-primary col-4" %>
+    </div>
+  </div>
+</div>

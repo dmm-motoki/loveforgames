@@ -1,7 +1,7 @@
 class Public::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    @posts = Post.where(user_id: @user.id).page(params[:page]).per(10)
+    @posts = Post.where(user_id: @user.id).order(created_at: :desc).page(params[:page]).per(10)
     @followings = @user.followings
     @followers = @user.followers
     favorites = FavoriteGame.where(user_id: current_user.id).pluck(:game_id)
@@ -47,9 +47,9 @@ class Public::UsersController < ApplicationController
   def unsubscribe
   end
 
-  def withdraw
+  def destroy
     @user = User.find(params[:id])
-    @user.update(is_active: false)
+    @user.destroy
     reset_session
     flash[:notice] = "退会しました"
     redirect_to root_path

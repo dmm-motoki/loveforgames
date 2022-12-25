@@ -1,19 +1,29 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <h1>ＤＭ一覧</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center mt-4">
+      <h1 class="bg-light py-2">ＤＭ一覧</h1>
     </div>
   </div>
   <div>
     <div>
       <ul class="list-unstyled">
-        <% @another_entries.each do |entries| %>
+        <% @another_entries.each do |entry| %>
           <li>
             <div class="card">
-              <div class="card-title"><%= entries.user.name%></div>
-              <div class="card-body">
-                <p><%= entries.room.messages.order(updated_at: :desc).limit(1).direct_message %></p>
+              <div class="card-title font-weight-bold ml-4 mt-3 mb-0">
+                <%= link_to entry.user.name, public_user_path(entry.user.id) %>
               </div>
+              <%= link_to public_room_path(entry.room_id) do %>
+              <div class="card-body">
+                <div>
+                  <% if entry.room.messages.present? %>
+                    <p class="text-dark"><%= Message.find_by(id: entry.room.message_ids.last)&.direct_message %></p>
+                  <% else %>
+                    <p class="text-dark">まだメッセージはありません。</p>
+                  <% end %>
+                </div>
+              </div>
+              <% end %>
             </div>
           </li>
         <% end %>

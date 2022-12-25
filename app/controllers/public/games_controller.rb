@@ -14,12 +14,12 @@ class Public::GamesController < ApplicationController
     @tags = Tag.all
     @post = Post.new
     if params[:search].present?
-      @posts = Post.where("message LIKE ?", '%' + params[:search] + '%').where(game_id: @game.id).page(params[:page]).per(10)
+      @posts = Post.where("message LIKE ?", '%' + params[:search] + '%').where(game_id: @game.id).order(created_at: :desc).page(params[:page]).per(10)
     elsif params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
-      @posts = @tag.posts.where(game_id: @game.id).page(params[:page]).per(10)
+      @posts = @tag.posts.where(game_id: @game.id).order(created_at: :desc).page(params[:page]).per(10)
     else
-      @posts = Post.where(game_id: @game.id).page(params[:page]).per(10)
+      @posts = Post.where(game_id: @game.id).order(created_at: :desc).page(params[:page]).per(10)
     end
   end
 
