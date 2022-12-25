@@ -88,9 +88,11 @@
   <div class="row bg-secondary justify-content-center py-4 my-5">
     <div class="col-md-10 d-flex justify-content-between">
       <h1 class="bg-light px-5 py-2 mb-0">投稿リスト</h1>
-      <div>
-        <%= link_to "いいね一覧", public_user_favorites_path(current_user.id), class: "btn btn-primary" %>
-      </div>
+      <% if @user.id == current_user.id %>
+        <div>
+          <%= link_to "いいね一覧", public_user_favorites_path(current_user.id), class: "btn btn-primary" %>
+        </div>
+      <% end %>
     </div>
       <% if @user.posts.empty? %>
         <div class="col-md-10 bg-light">
