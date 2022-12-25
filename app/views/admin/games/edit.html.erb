@@ -6,7 +6,7 @@
   </div>
   <div class="row">
     <div class="col-md-7 bg-light py-4 px-5">
-      <%= form_with model: @game, url: admin_game_path do |f| %>
+      <%= form_with model: @game, url: admin_game_path, method: :patch do |f| %>
         <div class="field ">
           <%= f.label :title, "タイトル", class: "font-weight-bold" %>
           <%= f.text_field :title, class: "form-control mb-2" %>

@@ -11,7 +11,8 @@
       <div class="col-md-7 text-center">
         <h1 class="bg-light py-3 mb-0"><%= @post.user.name %>さんの投稿</h1>
       </div>
-      <% if current_user.email != "guest@example.com" %>
+    <% end %>
+    <% if current_user.email != "guest@example.com" %>
         <% if FavoritePost.find_by(user_id: current_user.id, post_id: @post.id) %>
           <div class="col-md-2">
             <%= link_to public_post_favorites_path(@post.id), method: :delete do %>
@@ -25,8 +26,7 @@
             <% end %>
           </div>
         <% end %>
-      <% else %>
-      <% end %>
+    <% else %>
     <% end %>
   </div>
   <div class="row justify-content-center">

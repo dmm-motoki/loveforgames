@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center mt-5">
+      <h1 class="bg-light mb-0 py-2">ゲーム登録</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-10 bg-light">
+      <%= form_with model: @game, url: admin_games_path do |f| %>
+      <div class="text-center my-5">
+        <div class="field h3 mb-3">
+          <%= f.label :title, "タイトル" %>
+          <%= f.text_field :title, class: "form-control col-7 mx-auto" %>
+        </div>
+        <div class="field h3 mb-3">
+          <%= f.label :content, "概要" %>
+          <%= f.text_area :content, class: "form-control col-9 mx-auto", rows: "5" %>
+        </div>
+        <div class="action">
+          <%= f.submit "登録", class: "form-control col-2 mx-auto mt-3" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
