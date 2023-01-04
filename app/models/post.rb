@@ -9,4 +9,5 @@ class Post < ApplicationRecord
 
   has_many :favorite_posts, dependent: :destroy
 
+  validates :message, presence: true
 end

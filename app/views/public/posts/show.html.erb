@@ -74,6 +74,7 @@
         </div>
       <% else %>
         <p class="bg-light text-center p-5">コメントはありません。</p>
+        <%= link_to "exit", public_game_path(@post.game_id), class: "btn btn-secondary" %>
       <% end %>
     </div>
   </div>

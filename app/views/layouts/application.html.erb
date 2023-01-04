@@ -31,6 +31,7 @@
                 <% if current_user.email != "guest@example.com" %>
                   <li class="nav-item"><%= link_to 'マイページ', public_user_path(current_user.id), class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
                   <li class="nav-item"><%= link_to 'ＤＭ一覧', public_rooms_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
+                  <li class="nav-item"><%= link_to 'いいね一覧', public_user_favorites_path(current_user.id), class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
                 <% end %>
                 <li class="nav-item"><%= link_to 'ゲーム一覧', public_games_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
                 <li class="nav-item"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
@@ -44,6 +45,9 @@
         </div>
       </nav>
     </header>
+    <div class="flash bg-light">
+      <p><%= notice %></p>
+    </div>
     <%= yield %>
   </body>
 </html>
