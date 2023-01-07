@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
     @posts = Post.where(user_id: @user.id).order(created_at: :desc).page(params[:page]).per(10)
     @followings = @user.followings
     @followers = @user.followers
-    favorites = FavoriteGame.where(user_id: current_user.id).pluck(:game_id)
+    favorites = FavoriteGame.where(user_id: @user.id).pluck(:game_id)
     @favorite_games = Game.find(favorites)
 
     @current_entry = Entry.where(user_id: current_user.id)
