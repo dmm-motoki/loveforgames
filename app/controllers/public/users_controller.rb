@@ -25,19 +25,6 @@ class Public::UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
-
-  def update
-    @user = User.find(params[:id])
-    if @user.update(user_params)
-      redirect_to public_user_path(@user.id)
-    else
-      render :edit
-    end
-  end
-
   def favorites
     favorites = FavoritePost.where(user_id: current_user.id).pluck(:post_id)
     @favorites_posts = Post.find(favorites)

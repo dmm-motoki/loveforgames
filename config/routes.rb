@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
     resources :comments, only: [:create, :destroy]
     get '/users/:id/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
-    resources :users, only: [:show, :edit, :update, :destroy] do
+    resources :users, only: [:show, :destroy] do
       get :favorites
       resource :relationships, only: [:create, :destroy]
     end
