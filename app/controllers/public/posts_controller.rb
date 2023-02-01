@@ -1,4 +1,5 @@
 class Public::PostsController < ApplicationController
+  before_action :authenticate_user!
   def show
     @post = Post.find(params[:id])
     @comments = @post.comments.order(created_at: :desc).page(params[:page]).per(10)

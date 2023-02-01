@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :games, only: [:index, :new, :create, :show, :edit, :update, :destroy ]
     resources :posts, only: [:show, :destroy]
     delete '/posts/:id/destroy_in_postshow' => 'posts#destroy_in_postshow', as: 'destroy_in_postshow'
+    resources :tags, only: [:index, :show, :create, :destroy ]
     resources :comments, only: [:destroy]
     resources :users, only: [:index, :show, :destroy]
     patch '/users/:id/account_stop' => 'users#account_stop', as: 'account_stop'

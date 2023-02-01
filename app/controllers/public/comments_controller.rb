@@ -1,4 +1,5 @@
 class Public::CommentsController < ApplicationController
+  before_action :authenticate_user!
   def create
     @comment = current_user.comments.new(comment_params)
     if @comment.save
@@ -7,7 +8,7 @@ class Public::CommentsController < ApplicationController
       redirect_back(fallback_location: root_path)
     end
   end
-  
+
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy

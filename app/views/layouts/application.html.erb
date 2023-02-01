@@ -25,6 +25,7 @@
               <% if admin_signed_in? %>
                 <li class="nav-item"><%= link_to 'ゲーム一覧', admin_games_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
                 <li class="nav-item"><%= link_to 'ユーザー一覧', admin_users_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
+                <li class="nav-item"><%= link_to 'タグ一覧', admin_tags_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
                 <li class="nav-item"><%= link_to 'リクエスト', admin_requests_path, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
                 <li class="nav-item"><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-outline-secondary font-weight-bold mx-3 py-2 bg-light" %></li>
               <% elsif user_signed_in? %>

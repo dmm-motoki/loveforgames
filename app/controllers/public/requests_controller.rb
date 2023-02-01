@@ -1,4 +1,5 @@
 class Public::RequestsController < ApplicationController
+  before_action :authenticate_user!
   def create
     @request = Request.new(request_params)
     if Game.exists?(title: @request.title)

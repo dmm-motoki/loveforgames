@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  before_action :authenticate_admin!
   def index
     @users = User.all.page(params[:page]).per(20)
   end
@@ -11,20 +12,21 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
+    flash[:notice] = "アカウントデータが削除されました"
     redirect_to admin_users_path
   end
 
   def account_stop
     @user = User.find(params[:id])
     @user.update(is_active: false)
-    flash[:notice] = "退会しました"
+    flash[:notice] = "アカウント停止しました。"
     redirect_to admin_users_path
   end
 
   def account_start
     @user = User.find(params[:id])
     @user.update(is_active: true)
-    flash[:notice] = "退会しました"
+    flash[:notice] = "アカウント始動しました。"
     redirect_to admin_users_path
   end
 

@@ -1,4 +1,5 @@
 class Public::GamesController < ApplicationController
+  before_action :authenticate_user!
   def index
     @games = Game.all
     @request = Request.new

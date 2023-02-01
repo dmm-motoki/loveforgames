@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <h1 class="bg-light mb-0 py-1 mt-4">タグリスト</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-11 d-flex flex-wrap bg-light my-4 py-4">
+      <% @tags.each do |tags| %>
+        <ul class="list-group">
+          <%= link_to admin_tag_path(tags.id) do %>
+            <li class="list-group-item ml-2"><%= tags.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
