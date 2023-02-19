@@ -1,18 +1,33 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-4 text-center">
-      <h1 class="bg-light mb-0 py-1 mt-4">タグリスト</h1>
+    <div class="col-md-3 ml-5 mt-5">
+      <div>
+        <h1 class="bg-light mb-0 py-1 mt-3 text-center">タグ追加</h1>
+      </div>
+      <div class="bg-light p-4">
+        <%= form_with model: @tag, url: admin_tags_path do |f| %>
+          <div class="field bg-light mb-2">
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div>
+            <%= f.submit "登録", class: "form-control w-50 mx-auto" %>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-11 d-flex flex-wrap bg-light my-4 py-3">
-      <% @tags.each do |tags| %>
-        <ul class="list-group">
-          <%= link_to admin_tag_path(tags.id) do %>
-            <li class="list-group-item ml-2"><%= tags.name %></li>
-          <% end %>
-        </ul>
-      <% end %>
+    <div class="col-md-8 py-3">
+      <div>
+        <h1 class="bg-light mb-0 py-1 my-3 col-md-5 text-center">タグリスト</h1>
+      </div>
+      <div class="bg-light d-flex flex-wrap col-md-12 p-4">
+        <% @tags.each do |tags| %>
+          <ul class="list-group">
+            <%= link_to admin_tag_path(tags.id) do %>
+              <li class="list-group-item ml-2"><%= tags.name %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
