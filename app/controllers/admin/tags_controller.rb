@@ -18,6 +18,12 @@ class Admin::TagsController < ApplicationController
     end
   end
 
+  def destroy
+    @tag = Tag.find(params[:id])
+    @tag.destroy
+    redirect_to admin_tags_path
+  end
+
    private
 
   def tag_params

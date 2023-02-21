@@ -14,6 +14,6 @@ class Admin::PostsController < ApplicationController
   def destroy_in_postshow
     @post = Post.find(params[:id])
     @post.destroy
-    redirect_to admin_games_path
+    redirect_to request.referer
   end
 end

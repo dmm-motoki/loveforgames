@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mx-auto my-4 d-flex align-items-end justify-content-between">
+      <h1 class="bg-light text-center py-2 px-4 m-0 col-8">タグ「<%= @tag.name %>」を含む投稿</h1>
+      <span class="col-3"><%= link_to "タグ削除", admin_tag_path(@tag.id), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger" %></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <ul>
+        <% @posts.reverse_each do |posts| %>
+          <li class="list-unstyled">
+            <div class="card">
+              <div class="card-title d-flex pt-3 mb-0">
+                <h5 class="mx-5"><%= link_to posts.user.name, admin_user_path(posts.user.id) %></h5>
+                <h5 class="mx-5"><%= link_to posts.game.title, admin_game_path(posts.game.id) %></h5>
+              </div>
+              <div class="card-body">
+                <p><%= link_to posts.message, admin_post_path(posts.id), class: "text-dark" %></p>
+                <div class="text-right">
+                  <%= link_to "投稿削除", admin_destroy_in_postshow_path(posts.id), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger" %>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
