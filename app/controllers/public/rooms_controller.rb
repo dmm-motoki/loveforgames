@@ -19,9 +19,13 @@ class Public::RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
-    @messages = @room.messages.all
-    @message = Message.new
     @entries = @room.entries
-    @anoter_entry = @entries.where.not(user_id: current_user.id).first
+    if @entries.exists?(user_id: current_user.id)
+      @messages = @room.messages.all
+      @message = Message.new
+      @anoter_entry = @entries.where.not(user_id: current_user.id).first
+    else
+      redirect_to root_path
+    end
   end
 end
