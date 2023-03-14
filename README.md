@@ -33,4 +33,4 @@ https://docs.google.com/spreadsheets/d/1r_oaBoyhWuY5xx1oZjPxM4GR3tHt0Io0WzMjhRN-
 - IDE：Cloud9
 
 ## 使用素材
-仕様検討中です
+使用していません
